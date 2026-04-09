@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SiteFooter from "@/components/SiteFooter";
 
 const BlackBanner = ({ title, showBack }: { title: string; showBack?: boolean }) => {
   const navigate = useNavigate();
@@ -303,6 +304,7 @@ const AIASection = () => {
           </li>
         </ul>
       </ContentBlock>
+      <SiteFooter />
     </div>
   );
 };

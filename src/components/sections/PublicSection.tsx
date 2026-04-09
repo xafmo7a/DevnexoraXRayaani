@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ImagePanel from "@/components/sections/ImagePanel";
 import PressArchive from "@/components/sections/PressArchive";
+import SiteFooter from "@/components/SiteFooter";
 
 const BlackBanner = ({ title, showBack }: { title: string; showBack?: boolean }) => {
   const navigate = useNavigate();
@@ -242,6 +243,7 @@ const PublicSection = () => {
 
       {/* ═══ BLACK BANNER 3 ═══ */}
       <PressArchive />
+      <SiteFooter />
     </div>
   );
 };

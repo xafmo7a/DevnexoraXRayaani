@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ImagePanel from "@/components/sections/ImagePanel";
+import SiteFooter from "@/components/SiteFooter";
 
 /* ═══ Shared layout components (same as Public/AIA pages) ═══ */
 
@@ -254,6 +255,7 @@ const ServiceSection = () => {
         <p>Through my practice, I have also led <strong>site construction coordination, supervision, and project management</strong>, demonstrating the role of women in construction leadership and technical execution.</p>
       </ContentBlock>
 
+      <SiteFooter />
     </div>
   );
 };
