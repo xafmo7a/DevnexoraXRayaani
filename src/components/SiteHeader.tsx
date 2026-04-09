@@ -109,9 +109,9 @@ const SiteHeader = ({ onToggleCarousel, carouselOpen, scrollRef }: SiteHeaderPro
             boxShadow: "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.3)",
           }}
         >
-          <div className="w-full flex items-center justify-between relative min-h-[58px]">
-            {/* Social Links */}
-            <div className="flex gap-2 items-center">
+          <div className="w-full flex items-center min-h-[58px]">
+            {/* Left — Social Links */}
+            <div className="flex-1 flex gap-0.5 md:gap-2 items-center justify-start">
               {[
                 { src: iconFacebook, label: "Facebook", href: "#" },
                 { src: iconInstagram, label: "Instagram", href: "#" },
@@ -122,23 +122,23 @@ const SiteHeader = ({ onToggleCarousel, carouselOpen, scrollRef }: SiteHeaderPro
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  className="w-7 h-7 md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
                 >
-                  <img src={src} alt={label} className="w-[34px] h-[34px] object-contain invert" />
+                  <img src={src} alt={label} className="w-5 h-5 md:w-[34px] md:h-[34px] object-contain invert" />
                 </a>
               ))}
               <a
                 href="https://rayaani.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-7 h-7 md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
-                <img src={rawLogo} alt="RAW" className="h-[26px] w-auto" />
+                <img src={rawLogo} alt="RAW" className="h-5 md:h-[26px] w-auto" />
               </a>
             </div>
 
-            {/* Center: Portrait + Hamburger */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-10">
+            {/* Center — Portrait + Hamburger */}
+            <div className="flex-none flex flex-col items-center gap-1.5 px-3">
               <img
                 src={portrait}
                 alt="Raya Ani"
@@ -161,31 +161,31 @@ const SiteHeader = ({ onToggleCarousel, carouselOpen, scrollRef }: SiteHeaderPro
               </button>
             </div>
 
-            {/* Contact Buttons */}
-            <div className="flex gap-2 items-center">
+            {/* Right — Contact Buttons */}
+            <div className="flex-1 flex gap-0.5 md:gap-2 items-center justify-end">
               <a
                 href="https://wa.me/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-7 h-7 md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
-                <img src={iconWhatsapp} alt="WhatsApp" className="w-[34px] h-[34px] object-contain invert" />
+                <img src={iconWhatsapp} alt="WhatsApp" className="w-6 h-6 md:w-[52px] md:h-[52px] object-contain invert" />
               </a>
               <a
                 href="mailto:contact@rayaani.com"
                 aria-label="Email"
-                className="w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-7 h-7 md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
-                <img src={iconEmail} alt="Email" className="w-[34px] h-[34px] object-contain invert" />
+                <img src={iconEmail} alt="Email" className="w-5 h-5 md:w-[34px] md:h-[34px] object-contain invert" />
               </a>
               <a
                 href="https://www.aia.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-7 h-7 md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
-                <img src={aiaLogo} alt="AIA" className="w-[22px] h-[22px] object-contain" />
+                <img src={aiaLogo} alt="AIA" className="w-5 h-5 md:w-[22px] md:h-[22px] object-contain" />
               </a>
             </div>
           </div>

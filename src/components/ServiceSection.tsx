@@ -58,24 +58,6 @@ const RedSubTitle = ({ children }: { children: React.ReactNode }) => (
 
 const practiceAreas = [
   {
-    title: "Design Innovation & Competition Work",
-    items: [
-      "Built Work — Cultural, institutional, and civic projects grounded in design excellence and contextual response.",
-      "Competition Work — International competitions addressing complex cultural and urban questions.",
-      "Conceptual & Proposal Work — Forward-looking architectural strategies testing new programmatic and social models.",
-    ],
-    selected: [
-      "NYC Green School (P.S. 59)",
-      "LEED-certified residential towers, Battery Park City",
-      "Seton Hall University (NJ)",
-      "Xin Hua School of Fine Arts (China)",
-      "Iraq Pavilion (Expo 2020 Dubai)",
-      "Guggenheim Helsinki (competition)",
-      "Creek Mosque (UAE competition)",
-      "Women's Building (NYC proposal)",
-    ],
-  },
-  {
     title: "Technology & Emerging Systems",
     items: [
       "AI & Digital Integration — Direct application of artificial intelligence and computational tools to inform urban density, environmental performance, and design iteration.",
@@ -85,8 +67,8 @@ const practiceAreas = [
     selected: [
       "Liberland Master Plan (First Place)",
       "Creek Mosque (UAE – 3D-printed structural components)",
-      "Sonic Union Bryant Park (NYC – digital fabrication)",
-      "KSA Cultural, Sports & Entertainment Hubs (advanced parametric systems)",
+      "Sonic Union Bryant Park (NYC – digital fabrication integration)",
+      "KSA Cultural, Sports, and Entertainment Hubs (confidential – advanced parametric systems and digital fabrication workflows)",
     ],
   },
   {
@@ -119,35 +101,6 @@ const practiceAreas = [
   },
 ];
 
-const timeline = [
-  {
-    period: "1994–1998",
-    title: "Civic, Educational, Healthcare & Urban Architecture",
-    location: "Boston, MA",
-    desc: "Professional formation across several practices including Elkus Manfredi Architects, Wood & Zapata, Ellenzweig Associates, and The Ritchie Organization. Work included schools, universities, healthcare facilities, hospital planning, civic buildings, and mixed-use urban development.",
-  },
-  {
-    period: "1999–2005",
-    title: "Institutional, Cultural & Public Architecture",
-    location: "New York City, NY",
-    org: "Perkins + Will — Associate / Senior Designer",
-    desc: "University buildings, cultural institutions, corporate headquarters, and international projects including major cultural facilities in China.",
-  },
-  {
-    period: "2005–2009",
-    title: "Public Realm & Urban Design",
-    location: "New York City, NY",
-    org: "Ehrenkrantz Eckstut & Kuhn Architects — Associate Principal / Design Director",
-    desc: "Large civic and urban projects including public schools, housing neighborhoods, transportation hubs, waterfront developments, and major urban master plans.",
-  },
-  {
-    period: "2010–2012",
-    title: "International Studio Architecture",
-    location: "Dubai, UAE",
-    org: "Design Worldwide Partnership — Head of Architecture / Design Director",
-    desc: "Leadership of a multidisciplinary studio working on universities, hospitals, housing communities, and large regional master plans across the Middle East.",
-  },
-];
 
 /* ═══ Component ═══ */
 
@@ -159,15 +112,48 @@ const ServiceSection = () => {
 
       <ContentBlock>
         <p>
-          My work operates across regions, shaped through projects, collaborations, and leadership developed over three decades of practice. With a physical presence and strategic engagement in New York, Dubai, and India, I work within a global network connecting North America, the Middle East, Europe, and Asia. This practice is defined by the cross-pollination of ideas, knowledge, and practices across contexts—linking localized cultural intelligence with advanced design, technology, and delivery.
+          My work operates across regions, shaped through projects, collaborations, and leadership developed over <strong>three decades of practice</strong>. With a physical presence and strategic engagement in <strong>New York, Dubai, and India</strong>, I work within a global network connecting <strong>North America, the Middle East, Europe, and Asia</strong>. This practice is defined by the <strong>cross-pollination of ideas, knowledge, and practices</strong> across contexts—linking localized cultural intelligence with advanced design, technology, and delivery. Across geographies and scales, I have led and contributed to projects that engage cities, institutions, and communities, advancing <strong>resilient and sustainable built environments</strong>.
         </p>
       </ContentBlock>
+
+      <div className="px-5 md:px-10 py-6" style={{ background: "hsl(0 0% 100%)", borderBottom: "1px solid hsl(0 0% 88%)" }}>
+        <ImagePanel src="/images/service/spheres.png" alt="Multiple Spheres of Influence" />
+      </div>
 
       {/* ═══ BLACK BANNER — Advancing the Profession ═══ */}
       <BlackBanner title="Advancing the Profession" />
 
+      <ContentBlock>
+        <p>
+          I build platforms that advance the profession through design innovation, technology, environmental thinking, and global engagement.
+        </p>
+      </ContentBlock>
+
+      <RedSubTitle>Design Innovation & Competition Work</RedSubTitle>
+      <ContentBlock>
+        <p><strong className="text-black font-semibold">Built Work</strong> — Cultural, institutional, and civic projects grounded in design excellence and contextual response.</p>
+        <p><strong className="text-black font-semibold">Competition Work</strong> — International competitions addressing complex cultural and urban questions.</p>
+        <p><strong className="text-black font-semibold">Conceptual & Proposal Work</strong> — Forward-looking architectural strategies testing new programmatic and social models.</p>
+        <div className="pt-2">
+          <span className="text-[10px] font-semibold tracking-[0.2em] uppercase" style={{ color: "hsl(var(--aia-red))" }}>
+            Selected Work:
+          </span>
+          <span className="text-[12px] text-black/70 ml-2">
+            NYC Green School (P.S. 59) · LEED-certified residential towers in Battery Park City · Seton Hall University (NJ) · Xin Hua School of Fine Arts (China) · Iraq Pavilion (Expo 2020 Dubai) · Guggenheim Helsinki (competition) · Creek Mosque (UAE competition) · Women's Building (NYC proposal)
+          </span>
+        </div>
+      </ContentBlock>
+
+      <div
+        className="px-5 md:px-10 py-6 space-y-4"
+        style={{ background: "hsl(0 0% 100%)", borderBottom: "1px solid hsl(0 0% 88%)" }}
+      >
+        <img src="/images/service/s1.png" alt="Service 1" className="w-full h-auto" />
+        <img src="/images/service/s2.png" alt="Service 2" className="w-full h-auto" />
+      </div>
+
       {/* Practice Areas */}
-      {practiceAreas.map((area) => (
+      {practiceAreas.map((area, areaIdx) => (
         <div key={area.title}>
           <RedSubTitle>{area.title}</RedSubTitle>
           <ContentBlock>
@@ -195,94 +181,76 @@ const ServiceSection = () => {
               </span>
             </div>
           </ContentBlock>
+          {areaIdx === 0 && (
+            <div
+              className="px-5 md:px-10 py-6"
+              style={{ background: "hsl(0 0% 100%)", borderBottom: "1px solid hsl(0 0% 88%)" }}
+            >
+              <img src="/images/service/s3.png" alt="Service 3" className="w-full h-auto" />
+              <img src="/images/service/s4.png" alt="Service 4" className="w-full h-auto mt-4" />
+            </div>
+          )}
+          {areaIdx === 1 && (
+            <div
+              className="px-5 md:px-10 py-6"
+              style={{ background: "hsl(0 0% 100%)", borderBottom: "1px solid hsl(0 0% 88%)" }}
+            >
+              <img src="/images/service/s6.png" alt="Service 6" className="w-full h-auto" />
+              <img src="/images/service/s5.png" alt="Service 5" className="w-full h-auto mt-4" />
+            </div>
+          )}
+          {areaIdx === 2 && (
+            <div
+              className="px-5 md:px-10 py-6 space-y-4"
+              style={{ background: "hsl(0 0% 100%)", borderBottom: "1px solid hsl(0 0% 88%)" }}
+            >
+              <img src="/images/service/s7.png" alt="Iraq Pavilion" className="w-full h-auto" />
+              <img src="/images/service/s8.png" alt="Iraq Pavilion" className="w-full h-auto" />
+              <img src="/images/service/s9.png" alt="Iraq Pavilion" className="w-full h-auto" />
+              <img src="/images/service/s11.png" alt="Iraq Pavilion" className="w-full h-auto" />
+            </div>
+          )}
         </div>
       ))}
 
       {/* ═══ BLACK BANNER — 30 Years of Service ═══ */}
       <BlackBanner title="30 Years of Service" />
 
-      {timeline.map((item) => (
-        <div key={item.period}>
-          <div
-            className="px-5 md:px-10 py-4"
-            style={{ background: "hsl(0 0% 100%)", borderBottom: "1px solid hsl(0 0% 88%)" }}
-          >
-            <div className="flex items-center gap-3 mb-1">
-              <span
-                className="text-[11px] font-semibold tracking-[0.1em] px-2.5 py-0.5 rounded"
-                style={{
-                  background: "hsl(var(--aia-red) / 0.1)",
-                  color: "hsl(var(--aia-red))",
-                }}
-              >
-                {item.period}
-              </span>
-              <span className="text-[11px] text-black/40 tracking-[0.06em]">{item.location}</span>
-            </div>
-            <h4 className="text-[13px] font-semibold text-black tracking-[0.02em] mb-1">{item.title}</h4>
-            {item.org && (
-              <div className="text-[11px] text-black/50 italic mb-1">{item.org}</div>
-            )}
-            <p className="text-[12px] leading-[1.9] text-black font-normal text-justify font-body">
-              {item.desc}
-            </p>
-          </div>
-        </div>
-      ))}
-
-      {/* ═══ RAW-NYC Architects ═══ */}
-      <RedSubTitle>RAW-NYC Architects · 2012–Present</RedSubTitle>
       <ContentBlock>
-        <p>
-          Founded RAW-NYC Architects, a woman-founded and woman-led architectural practice, established independently without partners. The firm advances architecture, urbanism, and cultural projects through hands-on design and practice leadership, with a strong commitment to mentoring and empowering the next generation of leaders in architecture.
-        </p>
-        <div className="pt-2">
-          <span
-            className="text-[10px] font-semibold tracking-[0.2em] uppercase"
-            style={{ color: "hsl(var(--aia-red))" }}
-          >
-            Offices:
-          </span>
-          <span className="text-[12px] text-black/70 ml-2">
-            New York City, USA · Dubai, UAE · Kochi, India
-          </span>
-        </div>
-        <div>
-          <span
-            className="text-[10px] font-semibold tracking-[0.2em] uppercase"
-            style={{ color: "hsl(var(--aia-red))" }}
-          >
-            Collaborations:
-          </span>
-          <span className="text-[12px] text-black/70 ml-2">
-            Belgrade, Serbia · Bucharest, Romania
-          </span>
-        </div>
-        <p>
-          Through RAW-NYC Architects, I have prioritized mentorship and leadership development, guiding students, recent graduates, and emerging professionals entering the field. While I have actively supported the advancement of women in architecture, management, and construction, my mentorship extends broadly across the profession.
-        </p>
-        <p>
-          Through my practice, I have also led site construction coordination, supervision, and project management, demonstrating the role of women in construction leadership and technical execution.
-        </p>
+        <p><strong>1994–1998 — Civic, Educational, Healthcare, and Urban Architecture, Boston, MA</strong></p>
+        <p>Professional formation across several practices including <strong>Elkus Manfredi Architects</strong>, <strong>Wood & Zapata</strong>, <strong>Ellenzweig Associates</strong>, and <strong>The Ritchie Organization</strong>. Work included schools, universities, healthcare facilities, hospital planning, civic buildings, and mixed-use urban development, while developing experience in design innovation and architectural detailing within boutique studio environment.</p>
       </ContentBlock>
 
-      {/* ═══ Selected Work Gallery ═══ */}
-      <BlackBanner title="Selected Work" />
-      <div
-        className="px-5 md:px-10 py-8 space-y-6"
-        style={{ background: "hsl(0 0% 100%)" }}
-      >
-        <ImagePanel src="/images/service/spheres.png" alt="Multiple Spheres of Influence" label="Multiple Spheres of Influence — Global Reach" />
-        <ImagePanel src="/images/service/education.png" alt="Education & Institutional Projects" label="Education & Institutional Projects" />
-        <ImagePanel src="/images/service/cultural.png" alt="Cultural & Sacred Architecture" label="Cultural & Sacred Architecture" />
-        <ImagePanel src="/images/service/masterplan.png" alt="Master Planning & Urban Design" label="Master Planning & Urban Design" />
-        <ImagePanel src="/images/service/corporate.png" alt="Corporate & Interior Architecture" label="Corporate & Interior Architecture" />
-        <ImagePanel src="/images/service/innovation.png" alt="Innovation & Research" label="Innovation & Research" />
-        <ImagePanel src="/images/service/urban.png" alt="Urban Development & Waterfront" label="Urban Development & Waterfront" />
-        <ImagePanel src="/images/service/iraq-pavilion.png" alt="Iraq Pavilion" label="Iraq Pavilion — Built Work" />
-        <ImagePanel src="/images/service/timeline.png" alt="Iraq Pavilion Timeline" label="Iraq Pavilion — Project Timeline" />
-        <ImagePanel src="/images/service/nyc-cultural.png" alt="NYC Cultural Projects" label="NYC Cultural & Sustainability Projects" />
-      </div>
+      <ContentBlock>
+        <p><strong>1999–2005 — Institutional, Cultural, and Public Architecture, New York City, NY</strong></p>
+        <p>Perkins + Will — Associate / Senior Designer</p>
+        <p>University buildings, cultural institutions, corporate headquarters, and international projects including major cultural facilities in China.</p>
+      </ContentBlock>
+
+      <ContentBlock>
+        <p><strong>2005–2009 — Public Realm and Urban Design, New York City</strong></p>
+        <p>Ehrenkrantz Eckstut & Kuhn Architects — Associate Principal / Design Director</p>
+        <p>Large civic and urban projects including public schools, housing neighborhoods, transportation hubs, waterfront developments, and major urban master plans, shaping the public realm and city infrastructure.</p>
+      </ContentBlock>
+
+      <ContentBlock>
+        <p><strong>2010–2012 — International Studio Architecture, Dubai</strong></p>
+        <p>Design Worldwide Partnership — Head of Architecture / Design Director</p>
+        <p>Leadership of a multidisciplinary studio working on universities, hospitals, housing communities, and large regional master plans across the Middle East.</p>
+      </ContentBlock>
+
+      <ContentBlock>
+        <p><strong>2012–Present — RAW-NYC Architects</strong></p>
+        <p>Founded <strong>RAW-NYC Architects</strong>, a woman-founded and woman-led architectural practice, established independently without partners. The firm advances architecture, urbanism, and cultural projects through hands-on design and practice leadership, with a strong commitment to mentoring and empowering <strong>the next generation of leaders in architecture</strong>.</p>
+        <p>New York City, <strong>USA</strong> — Founding Office</p>
+        <p>Dubai, <strong>UAE</strong> — Founding Office</p>
+        <p>Kochi, <strong>India</strong> — Founding Office</p>
+        <p>Office Collaborations: Belgrade, <strong>Serbia</strong> | Bucharest, <strong>Romania</strong></p>
+        <p>The practice operates internationally with projects, collaborators, and research initiatives spanning North America, the Middle East, Europe, and Asia.</p>
+        <p>Through RAW-NYC Architects, I have prioritized <strong>mentorship and leadership development</strong>, guiding students, recent graduates, and emerging professionals entering the field. While I have actively supported the advancement of women in architecture, management, and construction, my mentorship extends broadly across the profession.</p>
+        <p>Through my practice, I have also led <strong>site construction coordination, supervision, and project management</strong>, demonstrating the role of women in construction leadership and technical execution.</p>
+      </ContentBlock>
+
     </div>
   );
 };
