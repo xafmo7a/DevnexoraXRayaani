@@ -4,13 +4,11 @@ const HEADER_H = 188;
 
 const IntroSplash = () => {
   const [phase, setPhase] = useState<"main" | "second">("main");
-  const [scale, setScale] = useState(1);
-  const [origin, setOrigin] = useState({ x: 50, y: 50 });
-  const [snapping, setSnapping] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-  const secondImgRef = useRef<HTMLImageElement>(null);
-  const initialDistRef = useRef<number | null>(null);
-  const baseScaleRef = useRef(1);
+  /* Live transform — kept in refs so we never need React re-renders during gesture */
+  const tfRef   = useRef({ s: 1, tx: 0, ty: 0 });
+  const prevRef = useRef<{ mx: number; my: number; dist: number } | null>(null);
 
   /* Intro timer */
   useEffect(() => {
@@ -18,70 +16,85 @@ const IntroSplash = () => {
     return () => clearTimeout(t);
   }, []);
 
-  /* Pinch-to-zoom — needs non-passive touchmove to call preventDefault */
+  /* Write transform directly to DOM — avoids React re-render lag */
+  const setTf = (s: number, tx: number, ty: number, animate = false) => {
+    const el = imgRef.current;
+    if (!el) return;
+    tfRef.current = { s, tx, ty };
+    el.style.transition = animate ? "transform 0.5s cubic-bezier(0.22,1,0.36,1)" : "none";
+    el.style.transform  = `translate(${tx}px,${ty}px) scale(${s})`;
+  };
+
+  /* Touch gesture handlers */
   useEffect(() => {
-    const el = secondImgRef.current;
+    const el = imgRef.current;
     if (!el) return;
 
-    const dist = (touches: TouchList) =>
-      Math.hypot(
-        touches[1].clientX - touches[0].clientX,
-        touches[1].clientY - touches[0].clientY
-      );
+    const mid  = (t: TouchList) => ({
+      mx: t.length >= 2 ? (t[0].clientX + t[1].clientX) / 2 : t[0].clientX,
+      my: t.length >= 2 ? (t[0].clientY + t[1].clientY) / 2 : t[0].clientY,
+    });
+    const dist = (t: TouchList) =>
+      t.length >= 2 ? Math.hypot(t[1].clientX - t[0].clientX, t[1].clientY - t[0].clientY) : 0;
 
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        initialDistRef.current = dist(e.touches);
-        baseScaleRef.current = scale;
-        setSnapping(false);
-      }
+    const onStart = (e: TouchEvent) => {
+      const { mx, my } = mid(e.touches);
+      prevRef.current = { mx, my, dist: dist(e.touches) };
     };
 
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length !== 2 || initialDistRef.current === null) return;
+    const onMove = (e: TouchEvent) => {
       e.preventDefault();
+      const prev = prevRef.current;
+      if (!prev) return;
 
-      const newScale = Math.min(
-        4,
-        Math.max(1, baseScaleRef.current * (dist(e.touches) / initialDistRef.current))
-      );
-      setScale(newScale);
+      const { mx, my }    = mid(e.touches);
+      const d             = dist(e.touches);
+      const { s, tx, ty } = tfRef.current;
 
-      /* Transform origin = midpoint of the two fingers */
+      /* — Scale (only when 2 fingers) — */
+      const rawRatio  = e.touches.length >= 2 && prev.dist > 0 ? d / prev.dist : 1;
+      const newS      = Math.max(1, Math.min(5, s * rawRatio));
+      const realRatio = newS / s;   // clamped ratio
+
+      /* Keep the pinch midpoint visually fixed while scaling.
+         With transformOrigin:0 0, rect.left = original_left + tx  */
       const rect = el.getBoundingClientRect();
-      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-      const my = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-      setOrigin({
-        x: ((mx - rect.left) / rect.width) * 100,
-        y: ((my - rect.top) / rect.height) * 100,
-      });
+      const newTx = tx + (mx - rect.left)  * (1 - realRatio) + (mx - prev.mx);
+      const newTy = ty + (my - rect.top)   * (1 - realRatio) + (my - prev.my);
+
+      prevRef.current = { mx, my, dist: d };
+      setTf(newS, newTx, newTy);
     };
 
-    const onTouchEnd = (e: TouchEvent) => {
-      if (e.touches.length < 2 && initialDistRef.current !== null) {
-        initialDistRef.current = null;
-        setSnapping(true);
-        setScale(1);
+    const onEnd = (e: TouchEvent) => {
+      if (e.touches.length === 0) {
+        /* All fingers lifted → spring back */
+        setTf(1, 0, 0, true);
+        prevRef.current = null;
+      } else {
+        /* One finger left after pinch → re-anchor for smooth pan */
+        const { mx, my } = mid(e.touches);
+        prevRef.current  = { mx, my, dist: 0 };
       }
     };
 
-    el.addEventListener("touchstart", onTouchStart, { passive: true });
-    el.addEventListener("touchmove", onTouchMove, { passive: false });
-    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchstart", onStart, { passive: true  });
+    el.addEventListener("touchmove",  onMove,  { passive: false });
+    el.addEventListener("touchend",   onEnd,   { passive: true  });
 
     return () => {
-      el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchmove", onTouchMove);
-      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchstart", onStart);
+      el.removeEventListener("touchmove",  onMove);
+      el.removeEventListener("touchend",   onEnd);
     };
-  }, [scale]);
+  }, []);
 
-  const baseStyle: React.CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
+  const base: React.CSSProperties = {
+    position:       "absolute",
+    inset:          0,
+    width:          "100%",
+    height:         "100%",
+    objectFit:      "contain",
     objectPosition: "top center",
   };
 
@@ -89,36 +102,30 @@ const IntroSplash = () => {
     <div className="fixed inset-0 z-[900]" style={{ background: "#000" }}>
       <div className="absolute left-0 right-0 bottom-0" style={{ top: HEADER_H }}>
 
-        {/* Main image */}
+        {/* Main image — shows for 5 s then fades out */}
         <img
           src="/images/service/main-image.png"
           alt=""
           style={{
-            ...baseStyle,
-            opacity: phase === "main" ? 1 : 0,
+            ...base,
+            opacity:    phase === "main" ? 1 : 0,
             transition: "opacity 1.5s ease-in-out",
           }}
         />
 
-        {/* Second image — pinch-to-zoom */}
+        {/* Second image — pinch-to-zoom + pan, springs back on release */}
         <img
-          ref={secondImgRef}
+          ref={imgRef}
           src="/images/service/second-image.png"
           alt=""
           style={{
-            ...baseStyle,
-            opacity: phase === "second" ? 1 : 0,
-            transition: snapping
-              ? "opacity 1.5s ease-in-out, transform 0.45s cubic-bezier(0.22,1,0.36,1)"
-              : "opacity 1.5s ease-in-out",
-            transform: `scale(${scale})`,
-            transformOrigin: `${origin.x}% ${origin.y}%`,
-            touchAction: "none",
-            userSelect: "none",
-            cursor: "grab",
-          }}
-          onTransitionEnd={() => {
-            if (snapping && scale === 1) setSnapping(false);
+            ...base,
+            opacity:         phase === "second" ? 1 : 0,
+            transition:      "opacity 1.5s ease-in-out",
+            transformOrigin: "0px 0px",
+            touchAction:     "none",
+            userSelect:      "none",
+            willChange:      "transform",
           }}
         />
       </div>

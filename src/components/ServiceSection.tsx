@@ -8,13 +8,13 @@ const BlackBanner = ({ title, showBack }: { title: string; showBack?: boolean })
   const navigate = useNavigate();
   return (
     <div
-      className="px-5 md:px-10 py-4 text-center relative"
+      className="px-5 md:px-10 pt-2 pb-10 flex items-start justify-center relative min-h-[64px]"
       style={{ background: "hsl(0 0% 0%)", borderBottom: "1px solid hsl(0 0% 15%)" }}
     >
       {showBack && (
         <button
           onClick={() => navigate("/")}
-          className="absolute left-5 md:left-10 top-1/2 -translate-y-1/2 flex items-center gap-2 text-[10px] font-semibold tracking-[0.2em] uppercase cursor-pointer transition-colors duration-200"
+          className="absolute left-5 md:left-10 top-2 flex items-center gap-2 text-[10px] font-semibold tracking-[0.2em] uppercase cursor-pointer transition-colors duration-200"
           style={{ color: "hsl(0 0% 100% / 0.5)" }}
           onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(0 0% 100% / 0.8)")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(0 0% 100% / 0.5)")}
@@ -22,7 +22,10 @@ const BlackBanner = ({ title, showBack }: { title: string; showBack?: boolean })
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
       )}
-      <h2 className="font-display text-[clamp(16px,2.5vw,24px)] font-normal tracking-[0.12em] uppercase text-white">
+      <h2
+        className={`text-[clamp(16px,2.5vw,24px)] font-normal tracking-[0.12em] uppercase text-white text-center ${showBack ? "px-16 md:px-24" : ""}`}
+        style={{ fontFamily: "Calibri, 'Trebuchet MS', sans-serif" }}
+      >
         {title}
       </h2>
     </div>
