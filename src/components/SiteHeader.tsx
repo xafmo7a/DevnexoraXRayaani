@@ -249,20 +249,22 @@ const SiteHeader = ({ onToggleCarousel, carouselOpen, scrollRef }: SiteHeaderPro
               animation: "tickerScroll 40s linear infinite",
             }}
           >
-            {[...videoIds, ...videoIds].map((id, i) => (
-              <div
-                key={`${id}-${i}`}
-                className="flex-shrink-0 w-[82px] px-[1px]"
-              >
-                <div className="rounded-md overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.15)" }}>
-                  <img
-                    src={`https://img.youtube.com/vi/${id}/mqdefault.jpg`}
-                    alt=""
-                    className="w-full aspect-video object-cover block"
-                  />
+            {[...Array(10)].flatMap((_, r) =>
+              videoIds.map((id, i) => (
+                <div
+                  key={`${r}-${id}-${i}`}
+                  className="flex-shrink-0 w-[82px] px-[1px]"
+                >
+                  <div className="rounded-md overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.15)" }}>
+                    <img
+                      src={`https://img.youtube.com/vi/${id}/mqdefault.jpg`}
+                      alt=""
+                      className="w-full aspect-video object-cover block"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </header>
